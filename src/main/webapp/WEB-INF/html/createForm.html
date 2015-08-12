@@ -1,4 +1,7 @@
 <form action="#" th:action="@{/todo/create}" th:object="${todo}" method="post">
     <p>Name: <input type="text" th:field="*{name}" /></p>
+    <p>Desc: <textarea rows="3" cols=""  th:field="*{desc}" /></p>
+    <p>Date: <input type="date" th:field="*{dueDate}"/></p>
+    <p>Done: <input type="checkBox" th:field="*{done}"/>
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>

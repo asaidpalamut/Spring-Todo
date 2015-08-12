@@ -22,12 +22,14 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 @Configuration
-@EnableWebMvc
-@EnableTransactionManagement
+@EnableWebMvc //spring in web mvc 
+@EnableTransactionManagement //trans lar spring tarafından yonetilityor..
 @ComponentScan("tr.lkd.lyk2015.springtodo")
 @PropertySource("classpath:error.properties")
 public class WebConfig extends WebMvcConfigurationSupport {
 
+	
+	//bean lerin hepsi dependency pool da toplanıyor..
 	@Bean
 	@Description("Thymeleaf template resolver serving HTML 5")
 	public ServletContextTemplateResolver templateResolver() {
@@ -36,7 +38,8 @@ public class WebConfig extends WebMvcConfigurationSupport {
 		templateResolver.setSuffix(".html");
 		templateResolver.setTemplateMode("LEGACYHTML5");
 		templateResolver.setCharacterEncoding("UTF-8");
-
+		templateResolver.setCacheable(false);
+		
 		return templateResolver;
 	}
 
@@ -58,7 +61,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
 		return viewResolver;
 	}
 
-	@Bean(name = "dataSource")
+	@Bean(name = "dataSource") // veritabanı konfigurasyonu
 	public DataSource getDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.postgresql.Driver");
@@ -91,7 +94,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
 	private Properties getHibernateProperties() {
 		Properties properties = new Properties();
 		properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-		properties.put("hibernate.hbm2ddl.auto", "create");
+		properties.put("hibernate.hbm2ddl.auto", "update");
 		properties.put("hibernate.show_sql", "true");
 		properties.put("hibernate.format_sql", "true");
 		properties.put("hibernate.use_sql_comments", "true");

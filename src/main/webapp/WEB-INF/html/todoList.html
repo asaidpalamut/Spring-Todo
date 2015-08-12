@@ -1,5 +1,34 @@
 <h1>Spring</h1>
+<form action="#" th:action="@{/todo}" th:object="${todo}" method="post">
+	<ul>
+		<li th:each="todo : ${todoList}">
+		
+		<div th:if="${todo.done}">
+		
+			<strike>
 
-<ul>
-	<li th:each="todo : ${todoList}"><p th:text="${todo.name}"></p></li>
-</ul>
+				<p
+					th:text="${todo.name} + '    ' + ${todo.desc} + '    ' + ${todo.readableDate()}"></p>
+					<a href="todo" th:href="@{/todo/updateForm(id=${todo.id})}" >Edit</a>
+				
+		</strike>
+			
+		
+		
+		</div>
+		
+		<div th:if="${todo.done == false}">
+		<p
+					th:text="${todo.name} + '    ' + ${todo.desc} + '    ' + ${todo.readableDate()}"></p>
+				Done :<input type="checkbox" name="active" th:value="${todo.id}" />
+				<a href="todo" th:href="@{/todo/updateForm(id=${todo.id})}" >Edit</a>
+		
+		</div>
+
+		</li>
+	</ul>
+
+	<p>
+		<input type="submit" value="Submit" />
+	</p>
+</form>
