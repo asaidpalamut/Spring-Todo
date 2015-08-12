@@ -63,13 +63,15 @@ public class TodoController {
 	
 	
 	@RequestMapping(value = "/updateForm", method = RequestMethod.GET, params="id")
-	public String update(@RequestParam("id") String id, Model model ) {
+	public String update(@RequestParam("id") String id, Model model, 
+						 @RequestParam(value="message", required=false) String message) {
 		
 		Todo todo = todoService.getById(Long.parseLong(id));
 		model.addAttribute("todo", todo);
-		
+		model.addAttribute("message", "success");
 		return "updateForm";
 	}
+	
 	
 	
 	@RequestMapping(value = "/updateForm", method = RequestMethod.POST)
@@ -77,7 +79,7 @@ public class TodoController {
 		
 		todoService.update(todo);
 		
-		return "redirect:/todo";
+		return "redirect:/todo/updateForm?id="+todo.getId()+"&message=success";
 	}
 
 }
