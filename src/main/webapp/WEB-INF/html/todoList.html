@@ -1,39 +1,59 @@
 
- <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script src="/bootstrapjs/bootstrap.min.js"></script>
 
+<div th:fragment="content">
 
-<h1>Spring</h1>
-<form action="#" th:action="@{/todo}" th:object="${todo}" method="post">
-	<ul>
-		<li th:each="todo : ${todoList}">
-		
-		<div th:if="${todo.done}">
-		
-			<strike>
+	<form action="#" th:action="@{/todo}" th:object="${todo}" method="post">
 
-				<p
-					th:text="${todo.name} + '    ' + ${todo.desc} + '    ' + ${todo.readableDate()}"></p>
-					<a href="todo" th:href="@{/todo/updateForm(id=${todo.id})}" >Edit</a>
-				
-		</strike>
-			
-		
-		
+    <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1>Todo List</h1>
+            </div>
+            <div class="panel-body"></div>
+
+
+		<ul>
+			<li th:each="todo : ${todoList}">
+
+				<div class="form-group">
+					<div th:if="${todo.done}">
+
+						<strike>
+
+							<h3 class="label label-default"
+								th:text="${todo.name} + '    ' + ${todo.desc} + '    ' + ${todo.readableDate()}"></h3>
+
+						</strike>
+						<span class="label label-success">Success</span> 
+						<br />
+						 <a href="todo" th:href="@{/todo/updateForm(id=${todo.id})}">Edit</a>
+						
+						
+
+					</div>
+
+
+					<div th:if="${todo.done == false}">
+						<p class="label label-default"
+							th:text="${todo.name} + '    ' + ${todo.desc} + '    ' + ${todo.readableDate()}"></p>
+						
+						<br />
+						Done :
+						<input type="checkbox" name="active" th:value="${todo.id}" />
+						<br />
+						<a href="todo" th:href="@{/todo/updateForm(id=${todo.id})}">Edit</a>
+					</div>
+					
+					<hr />
+				</div>
+			</li>
+		</ul>
+
+		<input style="margin-left: 40px" type="submit" value="To do" class="btn btn-primary btn-lg" />
 		</div>
 		
-		<div th:if="${todo.done == false}">
-		<p
-					th:text="${todo.name} + '    ' + ${todo.desc} + '    ' + ${todo.readableDate()}"></p>
-				Done :<input type="checkbox" name="active" th:value="${todo.id}" />
-				<a href="todo" th:href="@{/todo/updateForm(id=${todo.id})}" >Edit</a>
 		
-		</div>
+	</form>
 
-		</li>
-	</ul>
-
-	<p>
-		<input type="submit" value="Submit" class=""/>
-	</p>
-</form>
+</div>
